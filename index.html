@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Search Widget</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #191919;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #252525;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 7px 10px;
+    gap: 8px;
+    width: calc(100% - 24px);
+    transition: border-color 0.2s;
+  }
+
+  .search-box:focus-within {
+    border-color: #4a4a4a;
+  }
+
+  .search-icon {
+    flex-shrink: 0;
+    color: #4a4a4a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .search-box:focus-within .search-icon { color: #777; }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #ccc;
+    background: transparent;
+    min-width: 0;
+  }
+
+  .search-input::placeholder { color: #3d3d3d; }
+
+  .clear-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4a4a4a;
+    display: none;
+    align-items: center;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .clear-btn:hover { color: #888; }
+  .clear-btn.visible { display: flex; }
+
+  .search-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4a4a4a;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .search-btn:hover { color: #999; }
+</style>
+</head>
+<body>
+  <div class="search-box">
+    <div class="search-icon" onclick="doSearch()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </div>
+
+    <input
+      type="text"
+      class="search-input"
+      id="searchInput"
+      placeholder="Googleで検索..."
+      oninput="onInput()"
+      onkeydown="onKeyDown(event)"
+      autocomplete="off"
+    />
+
+    <button class="clear-btn" id="clearBtn" onclick="clearInput()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <button class="search-btn" onclick="doSearch()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </button>
+  </div>
+
+<script>
+  const input = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+
+  function onInput() {
+    clearBtn.classList.toggle('visible', input.value.length > 0);
+  }
+  function onKeyDown(e) {
+    if (e.key === 'Enter') doSearch();
+  }
+  function clearInput() {
+    input.value = '';
+    clearBtn.classList.remove('visible');
+    input.focus();
+  }
+  function doSearch() {
+    const q = input.value.trim();
+    if (!q) return;
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank');
+  }
+</script>
+</body>
+</html>
