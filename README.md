@@ -1,2 +1,2 @@
 # notion-search
-NotionのGoogle検索エンジンのウィジェット
+Notionで利用する検索エンジンのウィジェット
